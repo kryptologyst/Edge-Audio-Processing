@@ -1,0 +1,54 @@
+# Default configuration for edge audio processing
+defaults:
+  - _self_
+  - override hydra/launcher: basic
+
+# Model configuration
+model:
+  type: "cnn"  # cnn, tiny, transformer
+  input_length: 100
+  n_mfcc: 13
+  n_classes: 3
+  dropout_rate: 0.2
+  
+# Training configuration
+training:
+  epochs: 20
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  device: "auto"  # auto, cpu, cuda, mps
+  
+# Data configuration
+data:
+  n_samples_per_class: 200
+  test_split: 0.2
+  duration: 1.0
+  sample_rate: 16000
+  
+# Compression configuration
+compression:
+  enabled: true
+  pruning_ratio: 0.2
+  pruning_type: "magnitude"  # magnitude, structured
+  quantization_type: "dynamic"  # dynamic, static
+  
+# Export configuration
+export:
+  enabled: true
+  formats: ["onnx", "tflite"]
+  output_dir: "deployed_models"
+  
+# Evaluation configuration
+evaluation:
+  n_warmup: 10
+  n_iterations: 100
+  save_predictions: true
+  
+# Logging configuration
+logging:
+  level: "INFO"
+  save_logs: true
+  
+# Random seed
+seed: 42
